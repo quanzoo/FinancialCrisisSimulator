@@ -1,0 +1,186 @@
+<!doctype html>
+
+<html>
+    <head>
+        <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+
+        <link rel="stylesheet" type="text/css" href="https://blog-imgs-158.fc2.com/q/u/a/quanzoo/portopt.css">
+
+    </head>
+
+    <body>
+
+
+        <img src="https://blog-imgs-158.fc2.com/q/u/a/quanzoo/gfcsim.png" alt="title.png" width="700">
+        <br>
+        <br>
+        ポートフォリオを入力すると、リーマンショック含む世界金融危機（Global Financial Crisis）時のパフォーマンスを計算することができるシミュレーターです<br>
+        <br>
+        <h4 class=portopt>ポートフォリオ設計</h4>
+        <br>
+        <div id="parent">
+            <div id="child1">
+                <table class=portopt>
+                    <tbody>
+                        <tr align="center">
+                            <th>資産</th>
+                            <th>ウエイト</th>                        
+                        </tr>
+                        <tr align="center">
+                            <th id="name_TP">国内株式</th>
+                            <td><input type="number" class="wgt" id="wgt_TP" step="0.5" style="text-align:right;"/>%</td>                        
+                        </tr>
+                        <tr align="center">
+                            <th id="name_SP">米国株式</th>
+                            <td><input type="number" class="wgt" id="wgt_SP" step="0.5" style="text-align:right;"/>%</td>                        
+                        </tr>
+                        <tr align="center">
+                            <th id="name_ACWI">世界株式</th>
+                            <td><input type="number" class="wgt" id="wgt_ACWI" step="0.5" style="text-align:right;"/>%</td>                        
+                        </tr>
+                        <tr align="center">
+                            <th id="name_EME">新興国株式</th>
+                            <td><input type="number" class="wgt" id="wgt_EME" step="0.5" style="text-align:right;"/>%</td>                        
+                        </tr>
+                        <tr align="center">
+                            <th id="name_JB">国内債券</th>
+                            <td><input type="number" class="wgt" id="wgt_JB" step="0.5" style="text-align:right;"/>%</td>                        
+                        </tr>
+                        <tr align="center">
+                            <th id="name_DMB">先進国国債</th>
+                            <td><input type="number" class="wgt" id="wgt_DMB" step="0.5" style="text-align:right;"/>%</td>                        
+                        </tr>
+                        <tr align="center">
+                            <th id="name_EMB">新興国国債</th>
+                            <td><input type="number" class="wgt" id="wgt_EMB" step="0.5" style="text-align:right;"/>%</td>                        
+                        </tr>
+                        <tr align="center">
+                            <th id="name_IGB">ドル建社債</th>
+                            <td><input type="number" class="wgt" id="wgt_IGB" step="0.5" style="text-align:right;"/>%</td>                        
+                        </tr>
+                        <tr align="center">
+                            <th id="name_GOLD">金</th>
+                            <td><input type="number" class="wgt" id="wgt_GOLD" step="0.5" style="text-align:right;"/>%</td>                        
+                        </tr>
+                        <tr align="center">
+                            <th id="name_sum" style="background-color: #7a0000;">合計</th>
+                            <td style="background-color: #fdfbe8;"><input type="number" id="wgt_sum" style="text-align:right;" readonly/>%</td>                        
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+                <center><button type="submit" id="btn-load" onclick="Simulation()">
+                    シミュレーション実行🎢
+                    </button></center>
+            </div>
+
+            <div id="child2" style=	"padding: 1em;">
+                <br>
+                <div style=	"padding: 0.1em; border-left:solid 5px #e9b3a3; background-color:#F9F8F8;">
+                    <br>
+                    <b style="font-size:1.2em;">　使用方法</b>
+                    <ul>
+                        <li>各資産のウエイトを入力してください</li>
+                        <li>シミュレーション実行を押すと結果が出力されます</li>
+                        <li>詳しい計算前提はページ下部に記載しています</li>
+                    </ul>
+                </div>
+                <br>
+            </div>
+        </div>
+        <br>
+        <div id="error" hidden></div>
+        <br>
+            　　　
+        <br>
+        <br>
+        
+
+        <div id="output" hidden>
+            <h4 class=portopt>シミュレーション結果</h4>
+            <br>
+            <div id="parent">
+                <div id="child1">
+                    <b style="font-size:1.1em;">各資産のリターン</b>
+                    <table class=portopt>
+                        <tbody>
+                            <tr id="ret_port" align="center">
+                                <th style="background-color: #7a0000;">ポートフォリオ</th>
+                                <td id="ret_port" style="background-color: #fdfbe8;"></td>
+                            </tr>
+                            <tr id="ret_TP" align="center">
+                                <th>国内株式</th>
+                                <td id="ret_TP"></td>
+                            </tr>
+                            <tr id="ret_SP" align="center">
+                                <th>米国株式</th>
+                                <td id="ret_SP"></td>
+                            </tr>
+                            <tr id="ret_ACWI" align="center">
+                                <th>世界株式</th>
+                                <td id="ret_ACWI"></td>
+                            </tr>
+                            <tr id="ret_EME" align="center">
+                                <th>新興国株式</th>
+                                <td id="ret_EME"></td>
+                            </tr>
+                            <tr id="ret_JB" align="center">
+                                <th>国内債券</th>
+                                <td id="ret_JB"></td>
+                            </tr>
+                            <tr id="ret_DMB" align="center">
+                                <th>先進国国債</th>
+                                <td id="ret_DMB"></td>
+                            </tr>
+                            <tr id="ret_EMB" align="center">
+                                <th>新興国国債</th>
+                                <td id="ret_EMB"></td>
+                            </tr>
+                            <tr id="ret_IGB" align="center">
+                                <th>ドル建社債</th>
+                                <td id="ret_IGB"></td>
+                            </tr>
+                            <tr id="ret_GOLD" align="center">
+                                <th>金</th>
+                                <td id="ret_GOLD"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="child2">
+                    <b style="font-size:1.1em;">グラフ</b>
+                    <div style="width:800px; height:600px">
+                        <canvas id="myChart" width="400" height="300"></canvas>
+                    </div>
+                </div>                
+            </div>
+        </div>
+
+
+<br>
+        <div>
+            <h4 class=portopt>計算前提</h4>
+
+            <ul>
+                <li>2007年6月末～2009年2月末の累積リターンを表示</li>
+                <li>各資産のリターンは全て円換算後（為替ヘッジなし）、トータルリターン（配当込み）ベース</li>
+                <li>国内株式：TOPIX、米国株式：S&P500、世界株式：MSCI ACWI、新興国株式：MSCI EM、国内債券：S&P 日本債券、先進国国債：WGBI(除く日本)、新興国国債：JPM EMBI Global Core、ドル建社債：iBoxx 米ドル建投資適格社債</li>
+            </ul>
+            <br>
+            <br>
+            <h4 class=portopt>更新履歴</h4>
+            <br>
+            2025.04.10 ツール公開<br>
+            <br>
+            <br>
+            <br>
+            ※ 提示データや分析内容を含め、本ページは投資勧誘や投資アドバイスを目的としたものではありません。<br>
+            ※ 分析結果は投資を推奨するものではありません。分析結果を利用して行われた行為に対する責任を負いません。<br>
+            ※ 正確性や完全性を保証するものではありません。<br>
+            
+        </div>        
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script type="text/javascript" src="main.js"></script>
+
+    </body>
+</html>
