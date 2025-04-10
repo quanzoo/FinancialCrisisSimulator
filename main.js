@@ -20,10 +20,12 @@ for (var a of assets){
 document.addEventListener('DOMContentLoaded', () => {
   // すべてのnumber入力要素を取得
   const inputs = document.querySelectorAll('.wgt');
-  const output = document.getElementById('wgt_sum');
 
   // 合計を計算して出力する関数
   function updateSum() {
+      const inputs = document.querySelectorAll('.wgt');
+      const output = document.getElementById('wgt_sum');
+
       let sum = 0;
       inputs.forEach(input => {
           const value = Number(input.value) || 0; // 空の場合は0として扱う
