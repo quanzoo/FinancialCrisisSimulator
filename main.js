@@ -16,8 +16,49 @@ for (var a of assets){
 }
 
 
+// ドキュメントが読み込まれた後に実行
+document.addEventListener('DOMContentLoaded', () => {
+    // すべてのnumber入力要素を取得
+    const inputs = document.querySelectorAll('.wgt');
+  
+    // 合計を計算して出力する関数
+    function updateSum() {
+        const inputs = document.querySelectorAll('.wgt');
+        const output = document.getElementById('wgt_sum');
+  
+        let sum = 0;
+        inputs.forEach(input => {
+            const value = Number(input.value) || 0; // 空の場合は0として扱う
+            sum += value;
+        });
+        output.value = sum;
+    }
+  
+    // 各入力にイベントリスナーを追加
+    inputs.forEach(input => {
+        input.addEventListener('input', updateSum);
+    });
+  
+    // 初期表示時の合計を計算
+    updateSum();
+  });
 
 function loadCSV(url) {
+    var xhr = new XMLHttpRequest();
+    var rets = [];
+    
+    xhr.open('GET', url, false); // falseで同期処理
+    xhr.send();    
+    if (xhr.status === 200) { // 成功
+        var text = xhr.responseText;
+        rets = text.split('\n').map(row => row.split(','));
+    } else {
+        console.error('Error loading CSV. Status:', xhr.status);
+    }
+    return rets;
+}
+
+function loadCSV2(url) {
     var xhr = new XMLHttpRequest();
     var rets = [];
     
