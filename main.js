@@ -85,13 +85,13 @@ function loadCSV2(url) {
 
 function filterByDateRange(rets, startDateStr, endDateStr) {
   // 日付文字列をDateオブジェクトに変換
-  const startDate = new Date(startDateStr.replace(/\//g, '-'));
-  const endDate = new Date(endDateStr.replace(/\//g, '-'));
+  const startDate = new Date(startDateStr);
+  const endDate = new Date(endDateStr);
   
   // フィルタリング
   const filteredRets = rets.filter(row => {
       // 各行の1要素目（インデックス0）の日付をDateオブジェクトに変換
-      const rowDate = new Date(row[0].replace(/\//g, '-'));
+      const rowDate = new Date(row[0]);
       
       // 日付が範囲内かどうかをチェック
       return rowDate >= startDate && rowDate <= endDate;
