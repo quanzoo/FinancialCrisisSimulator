@@ -3,6 +3,8 @@ var myChart;
 var rets;
 var assets;
 
+console.log(rets)
+
 async function loadData() {
         // データ読み込み
     var url_rets = "https://quanzoo.github.io/PortfolioOptimizer/data/returns.csv";
@@ -207,6 +209,8 @@ function Simulation(){
   var endDateStr = "2009/2/27"
 
   filteredRets = filterByDateRange(rets, startDateStr, endDateStr)
+
+  console.log(filteredRets)
 
   assetCumRet = calculateCumulativeReturns(filteredRets)
 
