@@ -1,19 +1,27 @@
 // Chartをグローバル変数で宣言
 var myChart;
+var rets;
+var assets;
 
-// データ読み込み
-var url_rets = "https://quanzoo.github.io/PortfolioOptimizer/data/returns.csv";
-var rets = loadCSV(url_rets)
-var assets = rets[0].slice(1)
+async function loadData() {
+        // データ読み込み
+    var url_rets = "https://quanzoo.github.io/PortfolioOptimizer/data/returns.csv";
+    rets = await loadCSV(url_rets)
+    assets = rets[0].slice(1)
 
-// 初期値の入力
-for (var a of assets){
-  if (a == "TP"){
-    document.querySelector("input#wgt_" + a).value = 20;
-  } else {
-    document.querySelector("input#wgt_" + a).value = 10;
-  }
+    // 初期値の入力
+    for (var a of assets){
+    if (a == "TP"){
+        document.querySelector("input#wgt_" + a).value = 20;
+    } else {
+        document.querySelector("input#wgt_" + a).value = 10;
+    }
+    }
+
+    document.querySelector("input#wgt_sum").value = 100;
 }
+
+loadData()
 
 
 // ドキュメントが読み込まれた後に実行
@@ -42,8 +50,21 @@ document.addEventListener('DOMContentLoaded', () => {
     // 初期表示時の合計を計算
     updateSum();
   });
+  
+async function loadCSV(url) {
+    try {
+        const response = await fetch(url);
+        const text = await response.text();
+        const rets = text.split('\n').map(row => row.split(','));
+        console.log(rets);
+        return rets;
+    } catch (error) {
+        console.error('Error loading CSV:', error);
+    }
+}
 
-function loadCSV(url) {
+
+function loadCSV2(url) {
     var xhr = new XMLHttpRequest();
     var rets = [];
     
@@ -58,31 +79,7 @@ function loadCSV(url) {
     return rets;
 }
 
-function loadCSV2(url) {
-    var xhr = new XMLHttpRequest();
-    var rets = [];
-    
-    xhr.open('GET', url, false); // falseで同期処理
-    
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4) { // リクエスト完了
-            if (xhr.status === 200) { // 成功
-                var text = xhr.responseText;
-                rets = text.split('\n').map(row => row.split(','));
-            } else {
-                console.error('Error loading CSV. Status:', xhr.status);
-            }
-        }
-    };
-    
-    try {
-        xhr.send();
-    } catch (error) {
-        console.error('Error sending request:', error);
-    }
-    
-    return rets;
-}
+
 
 function filterByDateRange(rets, startDateStr, endDateStr) {
   // 日付文字列をDateオブジェクトに変換
