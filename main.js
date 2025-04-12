@@ -57,7 +57,6 @@ async function loadCSV(url) {
         const response = await fetch(url);
         const text = await response.text();
         const rets = text.split('\n').map(row => row.split(','));
-        console.log(rets);
         return rets;
     } catch (error) {
         console.error('Error loading CSV:', error);
