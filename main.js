@@ -3,7 +3,6 @@ var myChart;
 var rets;
 var assets;
 
-console.log(rets)
 
 async function loadData() {
         // データ読み込み
@@ -207,6 +206,9 @@ function Simulation(){
   var initialDateStr = "2007/6/29"
   startDateStr = getNextDate(rets, initialDateStr)
   var endDateStr = "2009/2/27"
+
+  console.log(rets)
+
 
   filteredRets = filterByDateRange(rets, startDateStr, endDateStr)
 
