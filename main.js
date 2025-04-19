@@ -12,14 +12,10 @@ async function loadData() {
 
     // 初期値の入力
     for (var a of assets){
-    if (a == "TP"){
-        document.querySelector("input#wgt_" + a).value = 20;
-    } else {
-        document.querySelector("input#wgt_" + a).value = 10;
-    }
+        document.querySelector("input#wgt_" + a).value = 0;
     }
 
-    document.querySelector("input#wgt_sum").value = 100;
+    document.querySelector("input#wgt_sum").value = 0;
 }
 
 loadData()
